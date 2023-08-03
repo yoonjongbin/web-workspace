@@ -12,11 +12,6 @@ import javax.servlet.annotation.WebFilter;
 @WebFilter("/*")
 public class ServletFilter implements Filter {
 
-	public static void main(String[] args) {
-		// TODO Auto-generated method stub
-
-	}
-
 	@Override
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
 			throws IOException, ServletException {
@@ -26,7 +21,7 @@ public class ServletFilter implements Filter {
 		
 		chain.doFilter(request, response);
 		
-		
+
 	}
 
 }
