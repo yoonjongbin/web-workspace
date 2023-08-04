@@ -71,17 +71,25 @@
 	</div>
 	
 	<script>
+		console.log(document.frm);
 		function checkData(){
 			// 나이를 숫자로 입력하지 않았을때,
 			// alert로 숫자를 입력하라고 메세지 띄우고
 			// return false
+			
 			const age = document.querySelector("#age");
 			const regExp = /^[0-9]+$/;
 			console.log(regExp.test(age.value));
-			console.log("NaN : " + isNaN(age.value));
 			
-			//console.log(typeof(Number(age.value)));
-			//console.log(Number(age.value)!==NaN);
+			
+			
+			//console.log("NaN : " + isNaN(age.value));
+			//if(inNaN(age)){
+				//window.alert("나이는 숫자만 입력하세요!!");
+				//return false;
+			//}
+			
+			
 			
 			if(regExp.test(age.value) === false){
 				window.alert("나이는 숫자만 입력하세요!!");
@@ -89,13 +97,9 @@
 				
 			}
 			
-			//if(typeOf() !== int){
-			//	alert("나이는 숫자만 입력하세요!!");
-				//return false;
-			//}
-			//return true;
+			
+			
 			return true;
-			//return regExp.test(age.value);
 		}
 	</script>
 </body>
