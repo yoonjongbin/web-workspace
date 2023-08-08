@@ -65,13 +65,52 @@ public class MemberDAO implements MemberDAOTemplate {
 
 	@Override
 	public MemberDTO login(String id, String pw) throws SQLException {
-		// TODO Auto-generated method stub
-		return null;
+		MemberDTO mem = new MemberDTO();
+		
+		Connection conn = getConnection();
+		String query = "SELECT * FROM MEMBER_DTO WHERE ID = ? AND PW = ?";
+		PreparedStatement ps = conn.prepareStatement(query);
+		
+		ps.setString(1, id);
+		ps.setString(2, pw);
+		
+		ResultSet rs = ps.executeQuery();
+		
+		if(rs.next()) {
+			
+			
+			mem.setId(rs.getString("id"));
+			mem.setPw(rs.getString("pw"));
+			mem.setName(rs.getString("name"));
+			mem.setAddr(rs.getString("addr"));
+		}
+		
+		closeAll(rs, ps, conn);
+		
+		return mem;
 	}
 
 	@Override
 	public MemberDTO findByIdMember(String id) throws SQLException {
-		// TODO Auto-generated method stub
+		MemberDTO mem = new MemberDTO();
+		Connection conn = getConnection();
+		String query = "SELECT * FROM MEMBER_DTO WHERE ID =?";
+		PreparedStatement ps = conn.prepareStatement(query);
+		ps.setString(1, id);
+		
+		ResultSet rs = ps.executeQuery();
+		
+		if(rs.next()){
+			mem.setId(rs.getString("id"));
+			mem.setPw(rs.getString("pw"));
+			mem.setName(rs.getString("name"));
+			mem.setAddr(rs.getString("addr"));
+			
+			closeAll(rs, ps, conn);
+			return mem;
+		}
+		
+		closeAll(rs, ps, conn);
 		return null;
 	}
 
@@ -112,7 +151,10 @@ public class MemberDAO implements MemberDAOTemplate {
 		MemberDAO dao = new MemberDAO();
 		
 		try {
-//			MemberDTO dto = new MemberDTO();
+			
+			
+			// 회원가입 로직
+			MemberDTO dto = new MemberDTO();
 //			dto.setId("USER3");
 //			dto.setPw("1234");
 //			dto.setName("홍길동");
@@ -120,11 +162,32 @@ public class MemberDAO implements MemberDAOTemplate {
 //			
 //			dao.registerMember(dto);
 			
-			ArrayList<MemberDTO> list = dao.showAllMember();
 			
-			for(MemberDTO mem : list) {
-				System.out.println(mem.getId()+ "/" + mem.getPw() + "/" + mem.getName() + "/" + mem.getAddr());
+			// 모든 멤버 조회로직
+//			ArrayList<MemberDTO> list = dao.showAllMember();
+//			
+//			for(MemberDTO mem : list) {
+//				System.out.println(mem.getId()+ "/" + mem.getPw() + "/" + mem.getName() + "/" + mem.getAddr());
+//			}
+			
+			
+			// 로그인 로직
+//			dto = dao.login("USER1", "1234");
+//			
+//			System.out.println(dto.getName() + "/" + dto.getId() + "/" + dto.getAddr());
+			
+			
+			// 멤버 검색 로직
+			
+			dto = dao.findByIdMember("USER");
+			
+			if(dto != null) {
+				System.out.println(dto.getName() + "/" + dto.getAddr());
+				
+			} else {
+				System.out.println("조회되는 회원이 없습니다.");
 			}
+			
 			
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block

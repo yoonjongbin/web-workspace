@@ -11,24 +11,24 @@
 	
 	<ul>
 	
-		<!-- 로그인 되어있지 않은경우 -->
-		
-		<li><a href="views/register.html">회원가입</a></li>
-		<%-- 회원가입 : 아이디, 비밀번호, 이름, 주소 입력 받아서
-				-> RegisterServlet / post 방식
-			 	-> session에 데이터 바인딩
-			 	-> session에 값이 있는 경우 -> AllMemberServlet
-			 	-> session에 값이 없는 경우 -> index.jsp
-		--%>
-		
-		
-		<li><a href="views/login.html">로그인</a></li>
-		<%-- 
-			로그인 -> 아이디, 비밀번호 입력해서
-				 -> LoginServlet / post 방식
-				 -> 세션에 바인딩 -> views/login_result.jsp (정보출력)
-		--%>
-		
+			<!-- 로그인 되어있지 않은경우 -->
+			
+			<li><a href="views/register.html">회원가입</a></li>
+			<%-- 회원가입 : 아이디, 비밀번호, 이름, 주소 입력 받아서
+					-> RegisterServlet / post 방식
+				 	-> session에 데이터 바인딩
+				 	-> session에 값이 있는 경우 -> AllMemberServlet
+				 	-> session에 값이 없는 경우 -> index.jsp
+			--%>
+			
+			
+			<li><a href="views/login.html">로그인</a></li>
+			<%-- 
+				로그인 -> 아이디, 비밀번호 입력해서
+					 -> LoginServlet / post 방식
+					 -> 세션에 바인딩 -> views/login_result.jsp (정보출력)
+			--%>
+			
 		<!-- 로그인 되었을 때 -->
 		
 		
@@ -47,7 +47,7 @@
 		 --%>
 		 
 		 
-		<li><a href="views/logout.jsp">회원검색</a></li>
+		<li><a href="views/logout.jsp">로그아웃</a></li>
 		<%-- 
 			로그아웃 : 로그아웃하고 index.jsp로 오면 됨
 		 --%>
