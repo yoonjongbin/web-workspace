@@ -16,7 +16,8 @@
 
 		<c:choose>
 
-			<c:when test="${dto==null}">
+			<%-- <c:when test="${dto==null}"> --%>
+			<c:when test="${empty dto}">
 				<%-- 로그인이 되어 있지 않은 경우 --%>
 				<li><a href="views/register.html">회원가입</a></li>
 				<%-- 회원가입 : 아이디, 비밀번호, 이름, 주소 입력 받아서

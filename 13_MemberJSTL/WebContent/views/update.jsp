@@ -12,7 +12,8 @@
 	
 	<%-- ${dto.id}--%>
 	<form action="/UpdateServlet" method="post">
-		ID : <input type="text" value="${dto.id}" name="id" id="id" disabled> <br>
+		<%-- ID : <input type="text" value="${dto.id}" name="id" id="id" disabled> <br> --%>
+		ID : <input type="text" value="${dto.id}" name="id" id="id" readonly> <br>
 		PW : <input type="password" value="${dto.password}" name="pw" id="pw"> <br>
 		이름 : <input type="text" value="${dto.name}" name="name" id="name"> <br>
 		주소 : <input type="text" value="${dto.address}" name="addr" id="addr"> <br>

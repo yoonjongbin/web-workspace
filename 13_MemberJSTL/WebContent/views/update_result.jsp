@@ -8,7 +8,7 @@
 <title>Insert title here</title>
 </head>
 <body>
-	<p>${dto.name}님의 정보를 수정했습니다.</p>
+	<p>${vo.name}님의 정보를 수정했습니다.</p>
 	<a href="../index.jsp">메인화면으로 돌아가기</a>
 </body>
 </html>

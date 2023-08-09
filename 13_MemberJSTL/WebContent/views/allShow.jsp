@@ -1,5 +1,6 @@
 <%@page import="servlet.model.vo.MemberDTO"%>
 <%@page import="java.util.ArrayList"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -28,6 +29,16 @@
 				<td><%= item.getAddress() %></td>
 			</tr>
 		<% } %>
+		
+		<c:forEach items="${list}" var="item">
+			<tr>
+				<td>${item.id}</td>
+				<td>${item.name}</td>
+				<td>${item.address}</td>
+			</tr>
+		
+		</c:forEach>
+		
 	</table>
 
 
