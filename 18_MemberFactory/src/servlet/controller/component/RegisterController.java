@@ -15,12 +15,12 @@ public class RegisterController implements Controller {
 	@Override
 	public ModelAndView handle(HttpServletRequest request, HttpServletResponse response) throws Exception {
 //		String path = "views/allShow.jsp";
-		String path = "/";
+//		String path = "/";
 		
 		String id = request.getParameter("id");
-		String pw = request.getParameter("pw");
+		String pw = request.getParameter("password");
 		String name = request.getParameter("name");
-		String addr = request.getParameter("addr");
+		String addr = request.getParameter("address");
 		
 		MemberVO vo = new MemberVO(id, pw, name, addr);
 		
@@ -31,7 +31,8 @@ public class RegisterController implements Controller {
 //		request.setAttribute("list", list);
 		
 		
-		return new ModelAndView(path);
+//		return new ModelAndView(path);	// 내가한거
+		return new ModelAndView("index.jsp", true);
 	}
 
 }

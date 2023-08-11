@@ -18,7 +18,8 @@ public class LogoutController implements Controller {
 		
 		if(session.getAttribute("vo")!=null) {
 			session.invalidate();
-			path= "/";
+//			path= "/";
+			return new ModelAndView("views/logout.jsp");
 		}			
 		
 		return new ModelAndView(path);

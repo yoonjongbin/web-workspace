@@ -65,6 +65,10 @@ public class DispatcherServlet extends HttpServlet {
 		doGet(request, response);
 	}
 
+	
+	
+	// 14_FrontControllerPattern
+	
 //	protected String register(HttpServletRequest request, HttpServletResponse response)
 //			throws ServletException, IOException, SQLException {
 //		// 1. 폼값 가져온다.

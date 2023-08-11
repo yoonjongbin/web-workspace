@@ -15,13 +15,16 @@ public class AllshowController implements Controller {
 	@Override
 	public ModelAndView handle(HttpServletRequest request, HttpServletResponse response) throws Exception {
 	
-		ArrayList<MemberVO> list = new ArrayList<MemberVO>();
+		ArrayList<MemberVO> list = new ArrayList<>();
 		list = MemberDAO.getInstance().showAllMember();
-		String path = "index.jsp";
-		if(list!=null) {
-			request.setAttribute("list", list);
-			path = "views/allShow.jsp";
-		}
+
+		String path = "views/allShow.jsp";
+		request.setAttribute("list", list);
+//		String path = "index.jsp";
+//		if(list!=null) {
+//			request.setAttribute("list", list);
+//			path = "views/allShow.jsp";
+//		}	// 내가 한거
 		
 		return new ModelAndView(path);
 	}

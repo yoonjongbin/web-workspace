@@ -21,13 +21,17 @@ public class LoginController implements Controller {
 		MemberVO vo = MemberDAO.getInstance().login(id, pw);
 		System.out.println(vo.getId());
 		
-		request.setAttribute("vo", vo);
+//		request.setAttribute("vo", vo);
+		
 		
 		
 		HttpSession session = request.getSession();
 		
-		session.setAttribute("vo", vo);
 		
+		if(vo!=null) {
+		session.setAttribute("vo", vo);
+		}
+//		return new ModelAndView(path);	// 내가한거
 		return new ModelAndView(path);
 	}
 

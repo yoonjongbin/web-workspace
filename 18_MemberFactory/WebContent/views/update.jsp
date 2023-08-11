@@ -13,7 +13,6 @@
 	<%-- ${dto.id}--%>
 	<form action="/update.do" method="post">
 		<%-- ID : <input type="text" value="${dto.id}" name="id" id="id" disabled> <br> --%>
-		<input type="hidden" name="command" value="update"> <br>
 		ID : <input type="text" value="${vo.id}" name="id" id="id" readonly> <br>
 		PW : <input type="password" value="${vo.password}" name="pw" id="pw"> <br>
 		이름 : <input type="text" value="${vo.name}" name="name" id="name"> <br>

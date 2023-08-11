@@ -24,8 +24,11 @@ public class UpdateController implements Controller {
 		MemberDAO.getInstance().update(vo);
 		
 		HttpSession session = request.getSession();
+//		session.setAttribute("vo", vo);	// 내가 한거
+		if(session.getAttribute("vo")!=null) {
+			session.setAttribute("vo", vo);
+		}
 		
-		session.setAttribute("vo", vo);
 		
 		String path = "views/update_result.jsp";
 		

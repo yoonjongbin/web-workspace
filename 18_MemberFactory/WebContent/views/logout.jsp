@@ -8,11 +8,6 @@
 <title>Insert title here</title>
 </head>
 
-<% 
-	MemberVO vo = (MemberVO) session.getAttribute("dto");
-	if(vo!=null) {
-		session.invalidate();
- %>
 <body onload="return logout()">
 	
 	<script>
@@ -23,6 +18,5 @@
 	</script>
 	
 </body>
- <% }  %>
 
 </html>
