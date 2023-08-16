@@ -24,13 +24,22 @@ public class IdCheckController implements Controller {
 		
 		MemberVO vo = MemberDAO.getInstance().findByIdMember(id);
 		
-		if(vo!=null) {
-			out.print(vo.getId() + "는 중복된 아이디입니다.");
-		} else {
-			out.print("사용가능!!");
-		}
 		
-		System.out.println(vo.getId());
+		
+//		System.out.println(vo.getId());
+		
+		// 비동기식	(주석인 내가 한 방법)
+		
+		boolean flag = false;
+		
+		if(vo!=null) {
+//			out.print(vo.getId() + "는 중복된 아이디입니다.");
+			flag = true;
+		} //else {
+//			out.print("사용가능!!");
+//		}
+		
+		out.print(flag);
 		
 		return null;
 	}

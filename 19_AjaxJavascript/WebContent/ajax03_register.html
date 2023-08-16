@@ -37,15 +37,30 @@
 		
 		xhr.onreadystatechange = callback;
 		
-		xhr.open("get", "idCheck.do?id=" + id.value);
-		xhr.send(null);
+		// get 방식
+		//xhr.open("get", "idCheck.do?id=" + id.value);
+		//xhr.send(null);
+		
+		// post 방식
+		xhr.open("post", "idCheck.do");
+		xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded;charset=utf-8") // key값을 인식하기 위한 설정
+		xhr.send("id=" + id.value);
 	}
 	
 	function callback(){
 		if(xhr.readyState === 4 && xhr.status === 200){
-			const text = xhr.responseText;
-			console.log(text);
-			document.querySelector("#idCheckView").innerHTML = "<h3>" + text + "</h3>";
+			//const text = xhr.responseText;
+			//console.log(text);
+			//document.querySelector("#idCheckView").innerHTML = "<h3>" + text + "</h3>";
+			
+			const flag = xhr.responseText;
+			const idCheckView = document.querySelector("#idCheckView");
+			
+			if(flag === "true"){
+				idCheckView.innerHTML = "<span style='color:red;'> ID 사용불가!!</span>";
+			} else{
+				idCheckView.innerHTML = "<span style='color:blue'> ID 사용가능!!</span>";
+			}
 		}
 	}
 	</script>
