@@ -11,7 +11,7 @@ import config.ServerInfo;
 
 public class ItemDAO implements ItemDAOTemplate {
 
-	
+	private static ItemDAO dao = new ItemDAO();
 	
 	public ItemDAO() {
 		try {
@@ -21,6 +21,10 @@ public class ItemDAO implements ItemDAOTemplate {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+	}
+	
+	public static ItemDAO getInstance() {
+		return dao;
 	}
 
 	@Override
@@ -53,8 +57,15 @@ public class ItemDAO implements ItemDAOTemplate {
 		ResultSet rs = ps.executeQuery();
 		
 		while(rs.next()) {
-			items.add(new Item(rs.getInt("ITEM_ID"), rs.getString("ITEM_NAME"), rs.getInt("PRICE"), rs.getString("DESCRIPTION"), rs.getString("PICTURE_URL"), rs.getInt("COUNT")));
+			items.add(new Item(rs.getInt("ITEM_ID"), 
+								rs.getString("ITEM_NAME"), 
+								rs.getInt("PRICE"), 
+								rs.getString("DESCRIPTION"), 
+								rs.getString("PICTURE_URL"), 
+								rs.getInt("COUNT")));	// 컬럼명 대신 숫자를 사용할 수 있다.(ex. rs.getInt("ITEM_ID") -> rs.getInt(1))
 		}
+		
+		closeAll(rs, ps, conn);
 		
 		return items;
 		
@@ -62,14 +73,39 @@ public class ItemDAO implements ItemDAOTemplate {
 
 	@Override
 	public Item getItem(int itemId) throws SQLException {
-		// TODO Auto-generated method stub
-		return null;
+		Connection conn = getConnection();
+		String query = "SELECT * FROM ITEM WHERE ITEM_ID=?";
+		PreparedStatement ps = conn.prepareStatement(query);
+		ps.setInt(1, itemId);
+		ResultSet rs = ps.executeQuery();
+		Item item = null;
+		
+		if(rs.next()) {
+			item = new Item(rs.getInt(1), rs.getString(2), rs.getInt(3), rs.getString(4), rs.getString(5), rs.getInt(6));
+		}
+		
+		closeAll(rs, ps, conn);
+		return item;
 	}
 
 	@Override
 	public boolean updateRecordCount(int itemId) throws SQLException {
-		// TODO Auto-generated method stub
-		return false;
+
+		Connection conn = getConnection();
+		
+		String query = "UPDATE ITEM SET COUNT = COUNT+1 WHERE ITEM_ID = ?";
+		PreparedStatement ps = conn.prepareStatement(query);
+		ps.setInt(1, itemId);
+		
+		
+		int row = ps.executeUpdate();
+		boolean result = false;
+		
+		if(row>0) result = true;
+		
+		closeAll(ps, conn);
+		
+		return result;
 	}
 	
 	public static void main(String[] args) {

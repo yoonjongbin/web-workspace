@@ -14,7 +14,9 @@ public class HandlerMapping {
 		Controller controller = null;
 		
 		if(command.equals("itemList.do")) {
-			controller = new itemListController();
+			controller = new ItemListController();
+		}else if(command.equals("itemView.do")) {
+			controller = new ItemViewController();
 		}
 		
 		return controller;

@@ -14,11 +14,11 @@ public class DispatcherServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String uri = request.getRequestURI();
-		System.out.println(uri);
-		String[] arr = uri.split("/");
+		String requestURI = request.getRequestURI();
+		System.out.println(requestURI);
+		String[] requestURIList = requestURI.split("/");
 	
-		String command = arr[arr.length-1];
+		String command = requestURIList[requestURIList.length-1];
 		System.out.println(command);
 		Controller controller = HandlerMapping.getInstance().createController(command);
 		try {
