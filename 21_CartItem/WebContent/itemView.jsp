@@ -14,7 +14,7 @@
 	<p id="title">
 		<span>조회수 : ${item.count}</span>
 		<button id="cartInsert" data-id="${item.itemId}" value="${item.itemName}, ${item.price}, ${item.pictureUrl}">장바구니 담기</button>
-		<a href="carrList.jsp">장바구니 확인</a>
+		<a href="cartList.jsp">장바구니 확인</a>
 		<a href="itemList.do">상품목록 보기</a>	
 	</p>
 	
