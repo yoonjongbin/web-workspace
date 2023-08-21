@@ -24,7 +24,7 @@
 			<tr>
 				<td>${item.id}</td>
 				<td>${item.name}</td>
-				<td>${item.address}</td>
+				<td>${item.addr}</td>
 			</tr>
 		
 		</c:forEach>

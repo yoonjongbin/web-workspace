@@ -3,6 +3,22 @@
 <mapper namespace="memberMapper">
 	<!-- namespace : 해당 mapper 파일의 고유한 별칭 -->
 	
+	<!-- resultMap : 조회한 결과를 객체와 Row 간의 1:1 매칭이 아닌,
+					 원하는 객체의 필드에 담아 반환하고자 할 때 사용 -->
+					 
+	<resultMap type="Member" id="memberMap">
+		<!-- 
+			property = 자바 필드 변수 이름 / column = DB 해당 컬럼
+			id는 primary key / result는 일반 컬럼
+		 -->
+		 
+		 <id property="id" column="member_id"/>
+		 <result property="password" column="member_pw"/>
+		 <result property="name" column="member_name"/>
+		 <result property="address" column="member_addr"/>
+		 
+	</resultMap>
+	
 	<!-- 
 		 * DML문일 경우
 		 <insert|update|delete id="식별자" parameterType="전달받을 자바타입(풀클래스명)|별칭">
@@ -16,32 +32,188 @@
 		 ? 대신에 해당 sql문에 전달된 객체로부터 값을 꺼낼 때 
 		 	                   #{필드명 또는 변수명 또는 키값} 이용
 	 -->
+	 
+	 <!-- ** 여기서 주의!!! ** 
+	 	resultMap으로 뽑는게 아니라면 MemberVO 랑 DB 컬럼명이라 완전히 
+	 	일치시켜서 뽑지 않으면 해당 변수는 null로 뜬다!
+		
+		ex)
+			MemberVO객체의 패스워드 변수명 : password
+			DB테이블의 패스워드 컬럼 명 : pw
+			
+			select pw from member_dto where pw = 1234
+			pw = null
+	 -->
 	<insert id="registerMember" parameterType="Member">
 		INSERT INTO MEMBER_DTO(id, pw, name, addr)
-		VALUES(#{id}, #{password}, #{name}, #{address})
+		VALUES(#{id}, #{pw}, #{name}, #{addr})
 	</insert>
 	
 	<!--  showAllMember, findByIdMember, login, updateMember -->
-	<select id="showAllMember" resultType="Member">
-		SELECT id, pw, name, addr
-		FROM MEMBER_DTO
+	<select id="showAllMember" resultMap="memberMap">
+		SELECT member_id, member_pw, member_name, member_addr
+		FROM MEMBER2
 	</select>
 	
-	<select id="findByIdMember" parameterType="String" resultType="Member">
+	<!-- 
+		* MyBatis의 동적쿼리
+		
+		- MyBatis의 강력한 기능 중 하나
+		
+		- MyBatis에서는 쿼리를 동적으로 제어할 수 있는 요소(Element)들을 제공한다.
+
+		- 동적 쿼리 요소들을 사용하여 좀 더 쉽게 쿼리를 구현할 수 있다.
+
+		
+		* if
+		
+		- 동적 쿼리를 구현할 때 기본적으로 사용되는 구문
+		
+		- 특정 조건을 만족할 경우 안의 구문을 쿼리에 포함
+		
+		- 필요로 하는 조건이 1개 이상일 경우 여러개 사용
+	 -->
+	 
+	 <!--  <select id="findByIdMember" parameterType="Member" resultType="Member">
 		SELECT *
 		FROM MEMBER_DTO
-		WHERE id=#{id}
+		<if test="id != ''">
+			WHERE AND id = #{id}
+		</if>
+	</select> -->
+	
+	<!--  <select id="findByIdMember" parameterType="Member" resultType="Member">
+		SELECT *
+		FROM MEMBER_DTO
+		WHERE 1=1
+		<if test="id != null">
+			AND id like '%'||#{id}||'%'
+		</if>
+		<if test="addr != null">
+			AND addr like '%'||#{addr}||'%'
+		</if>
+	</select> -->
+	
+	
+	
+	<!-- 
+		* choose
+		
+		- 자바의 switch, JSTL의 choose 구문과 유사하여 주어진 구문 중 한가지만을 수행
+		
+		- 하위 요소의 when, otherwise 요소와 함께 사용
+		
+		
+		* trim
+		
+		- 쿼리 구문의 특정 부분을 없앨 때 사용
+		
+		- prefix로 처음 시작할 단어와 
+			1) prefixOverrides로 시작 시, 제거해야 할 단어 명시
+			2) suffixOverrides로 끝날 시, 제거해야 할 단어 명시
+		
+		- where 또는 set 대신 사용 가능
+		
+		
+		* where
+		
+		- 기존 쿼리의 WHERE 절을 동적으로 구현할 때 사용
+		
+		- 만약 태그 안의 내용이 'AND' 나 'OR'로 시작할 경우 'AND' 나 'OR'을 제거
+		
+		
+		* set
+		
+		- 기존의 UPDATE SET 절을 동적으로 구현할 때 사용
+		
+		- SET 키워드를 붙이고 불필요한 콤마를 제거
+		
+		
+		* foreach
+		
+		- 동적 쿼리를 구현할 때, Collection에 대한 반복 처리를 제공
+	 -->
+	
+	<select id="findByIdMember" parameterType="List" resultType="Member">
+		SELECT *
+		FROM MEMBER_DTO
+		WHERE id IN
+		<foreach collection="list" item="item" open="(" close=")" separator=",">
+			#{item}
+		</foreach>
+		<!-- 
+		<trim prefix="WHERE" prefixOverrides="AND|OR">
+			<if test="id != null">
+				id like '%'||#{id}||'%'
+			</if>
+			<if test="addr != null">
+				AND addr like '%'||#{addr}||'%'
+			</if>
+		</trim>
+		-->
+		 
+		<!--
+		<where>
+			<if test="id != null">
+				id like '%'||#{id}||'%'
+			</if>
+			<if test="addr != null">
+				AND addr like '%'||#{addr}||'%'
+			</if>
+		</where>
+		-->
+		
+		<!--
+		WHERE
+		<choose>
+			<when test="id != null">
+				id like '%'||#{id}||'%'
+			</when>
+			<when test="addr != null">
+				addr like '%'||#{addr}||'%'
+			</when>
+			<otherwise>
+				id like '%USER%'
+			</otherwise>
+			
+		</choose>
+		-->
+		
+		
 	</select>
 	
 	<select id="login" parameterType="Member" resultType="Member">
 		SELECT * 
 		FROM MEMBER_DTO
-		WHERE id=#{id} AND pw=#{password}
+		WHERE id=#{id} AND pw=#{pw}
 	</select>
 	
 	<update id="updateMember" parameterType="Member">
 		UPDATE MEMBER_DTO
-		SET pw=#{password}, name=#{name}, addr=#{address}
+		<trim prefix="SET" suffixOverrides=",">
+			<if test="pw != null">
+				pw=#{pw},
+			</if>
+			<if test="name != null">
+				name=#{name},
+			</if>
+			<if test="addr != null">
+				addr=#{addr},
+			</if>
+		</trim>
+		<!-- 
+		<set>
+			<if test="pw != null">
+				pw=#{pw},
+			</if>
+			<if test="name != null">
+				 name=#{name},
+			</if>
+			<if test="addr != null">
+				addr=#{addr}
+			</if>
+		</set>
+		 -->
 		WHERE id=#{id}
 	</update>
 	

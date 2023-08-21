@@ -2,9 +2,9 @@ package member.model.vo;
 
 public class MemberVO {
 	private String id;
-	private String password;
+	private String pw;
 	private String name;
-	private String address;
+	private String addr;
 	
 	public MemberVO() {
 	}
@@ -12,9 +12,9 @@ public class MemberVO {
 	public MemberVO(String id, String password, String name, String address) {
 		super();
 		this.id = id;
-		this.password = password;
+		this.pw = password;
 		this.name = name;
-		this.address = address;
+		this.addr = address;
 	}
 
 	public String getId() {
@@ -25,12 +25,12 @@ public class MemberVO {
 		this.id = id;
 	}
 
-	public String getPassword() {
-		return password;
+	public String getPw() {
+		return pw;
 	}
 
-	public void setPassword(String password) {
-		this.password = password;
+	public void setPw(String pw) {
+		this.pw = pw;
 	}
 
 	public String getName() {
@@ -41,18 +41,22 @@ public class MemberVO {
 		this.name = name;
 	}
 
-	public String getAddress() {
-		return address;
+	public String getAddr() {
+		return addr;
 	}
 
-	public void setAddress(String address) {
-		this.address = address;
+	public void setAddr(String addr) {
+		this.addr = addr;
 	}
 
 	@Override
 	public String toString() {
-		return "MemberVO [id=" + id + ", password=" + password + ", name=" + name + ", address=" + address + "]";
+		return "MemberVO [id=" + id + ", pw=" + pw + ", name=" + name + ", addr=" + addr + "]";
 	}
+	
+	
+
+	
 	
 	
 	

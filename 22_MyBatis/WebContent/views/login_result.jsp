@@ -17,7 +17,7 @@
 				<li>${vo}</li>
 				<li>아이디 : ${vo.id}</li>
 				<li>이름 : ${vo.name}</li>
-				<li>주소 : ${vo.address}</li>
+				<li>주소 : ${vo.addr}</li>
 			</ul>
 			<a href="/index.jsp">첫 페이지로 이동</a>
 		</c:when>

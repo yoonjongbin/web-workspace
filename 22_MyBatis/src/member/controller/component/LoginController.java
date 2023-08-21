@@ -20,7 +20,7 @@ public class LoginController implements Controller {
 		
 		MemberVO m = new MemberVO();
 		m.setId(id);
-		m.setPassword(pw);
+		m.setPw(pw);
 		
 		MemberVO vo = new MemberService().login(m);
 		

@@ -7,8 +7,22 @@
 <body>
 	<h1>회원조회</h1>
 	<form action="/find.do" method="post">
+	
+		<!-- 
 		검색할 회원 아이디를 입력해주세요.<br>
-		<input type="text" name="id">
+		
+		아이디 : <input type="text" name="id"> <br>
+		주소 : <input type="text" name="addr">
+		-->
+		 
+		<label>
+		<input type="checkbox" name="checkId" value="USER1"> user1
+		</label>
+		
+		<label>
+		<input type="checkbox" name="checkId" value="USER2"> user2
+		</label>
+		
 		<input type="submit" value="조회">
 	</form>
 </body>
