@@ -24,7 +24,9 @@ public class AllMemberServlet extends HttpServlet {
 			ArrayList<MemberDTO> list = new MemberService().showAllMember();
 			request.setAttribute("list", list);
 			request.getRequestDispatcher("/views/allShow.jsp").forward(request, response);
-		} catch (SQLException e) {}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

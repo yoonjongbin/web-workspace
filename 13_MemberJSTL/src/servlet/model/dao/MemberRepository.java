@@ -34,7 +34,7 @@ public class MemberRepository implements MemberDAOTemplate {
 	public void registerMember(MemberDTO dto) throws SQLException {
 		Connection conn = getConnection();
 		
-		String query = "INSERT INTO member(id, password, name, address) VALUES(?, ?, ?, ?)";
+		String query = "INSERT INTO MEMBER_DTO(id, pw, name, addr) VALUES(?, ?, ?, ?)";
 		PreparedStatement ps = conn.prepareStatement(query);
 		
 		ps.setString(1, dto.getId());
@@ -52,7 +52,7 @@ public class MemberRepository implements MemberDAOTemplate {
 	public MemberDTO login(String id, String password) throws SQLException {
 		Connection conn = getConnection();
 		
-		String query = "SELECT * FROM member WHERE id=? AND password=?";
+		String query = "SELECT * FROM MEMBER_DTO WHERE id=? AND pw=?";
 		PreparedStatement ps = conn.prepareStatement(query);
 		
 		ps.setString(1, id);
@@ -63,9 +63,9 @@ public class MemberRepository implements MemberDAOTemplate {
 		if(rs.next()) {
 			dto = new MemberDTO();
 			dto.setId(rs.getString("id"));
-			dto.setPassword(rs.getString("password"));
+			dto.setPassword(rs.getString("pw"));
 			dto.setName(rs.getString("name"));
-			dto.setAddress(rs.getString("address"));
+			dto.setAddress(rs.getString("addr"));
 		}
 		closeAll(rs, ps, conn);
 		return dto;
@@ -75,7 +75,7 @@ public class MemberRepository implements MemberDAOTemplate {
 	public MemberDTO findByIdMember(String id) throws SQLException {
 		Connection conn = getConnection();
 		
-		String query = "SELECT * FROM member WHERE id=?";
+		String query = "SELECT * FROM MEMBER_DTO WHERE id=?";
 		PreparedStatement ps = conn.prepareStatement(query);
 		
 		ps.setString(1, id);
@@ -85,9 +85,9 @@ public class MemberRepository implements MemberDAOTemplate {
 		if(rs.next()) {
 			dto = new MemberDTO();
 			dto.setId(rs.getString("id"));
-			dto.setPassword(rs.getString("password"));
+			dto.setPassword(rs.getString("pw"));
 			dto.setName(rs.getString("name"));
-			dto.setAddress(rs.getString("address"));
+			dto.setAddress(rs.getString("addr"));
 		}
 		closeAll(rs, ps, conn);
 		return dto;
@@ -97,7 +97,7 @@ public class MemberRepository implements MemberDAOTemplate {
 	public ArrayList<MemberDTO> showAllMember() throws SQLException {
 		Connection conn = getConnection();
 		
-		String query = "SELECT * FROM member";
+		String query = "SELECT * FROM MEMBER_DTO";
 		PreparedStatement ps = conn.prepareStatement(query);
 		
 		ResultSet rs = ps.executeQuery();
@@ -105,11 +105,14 @@ public class MemberRepository implements MemberDAOTemplate {
 		while(rs.next()) {
 			MemberDTO dto = new MemberDTO();
 			dto.setId(rs.getString("id"));
-			dto.setPassword(rs.getString("password"));
+			dto.setPassword(rs.getString("pw"));
 			dto.setName(rs.getString("name"));
-			dto.setAddress(rs.getString("address"));
+			dto.setAddress(rs.getString("addr"));
 			list.add(dto);
 		}
+//		for(MemberDTO member : list) {
+//			System.out.println("DAOMember : " + member);
+//		}
 		closeAll(rs, ps, conn);
 		return list;
 	}
@@ -143,6 +146,21 @@ public class MemberRepository implements MemberDAOTemplate {
 		closeAll(ps, conn);
 		
 		return result;
+	}
+	
+	public static void main(String[] args) {
+		MemberRepository repo = new MemberRepository();
+		
+		try {
+			ArrayList<MemberDTO> list = repo.showAllMember();
+			
+			for(MemberDTO member : list) {
+				System.out.println(member);
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 }

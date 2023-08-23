@@ -26,9 +26,9 @@
  	-->
  	
  	<resultMap type="Student" id="studentMap">
-    <id property="studentNo" column="STUDENT_NO"/>
-    <result property="studentName" column="STUDENT_NAME"/>
-    <result property="studentAddr" column="STUDENT_ADDRESS"/>
+    <id property="student_No" column="STUDENT_NO"/>
+    <result property="student_Name" column="STUDENT_NAME"/>
+    <result property="student_Address" column="STUDENT_ADDRESS"/>
     <association property="department" resultMap="departmentMap"/>
 	</resultMap>
  	
@@ -42,9 +42,9 @@
  	 <select id="showAllStudent" parameterType="String" resultMap="studentMap">
  	 	SELECT STUDENT_NO, STUDENT_NAME, STUDENT_ADDRESS, TB_DEPARTMENT.DEPARTMENT_NO, DEPARTMENT_NAME, CATEGORY 
  	 	FROM TB_STUDENT
- 	 	INNER JOIN TB_DEPARTMENT
+ 	 	<!-- INNER --> JOIN TB_DEPARTMENT
  	 	ON(TB_STUDENT.DEPARTMENT_NO = TB_DEPARTMENT.DEPARTMENT_NO)
- 	 	<if test="word != ''">
+ 	 	<!--  <if test="word != ''">
  	 		<where>
  	 			STUDENT_NO LIKE '%'||#{word}||'%'
  	 			OR STUDENT_NAME LIKE '%'||#{word}||'%'
@@ -53,6 +53,17 @@
  	 			OR CATEGORY LIKE '%'||#{word}||'%'
  	 		</where>
  	 	</if>
+ 	 	-->
+ 	 	
+ 		<where>
+ 			<if test="word!=null">
+ 				STUDENT_NO LIKE '%'||#{word}||'%'
+ 	 			OR STUDENT_NAME LIKE '%'||#{word}||'%'
+ 	 			OR STUDENT_ADDRESS LIKE '%'||#{word}||'%'
+ 	 			OR DEPARTMENT_NAME LIKE '%'||#{word}||'%'
+ 	 			OR CATEGORY LIKE '%'||#{word}||'%'
+ 			</if>
+ 		</where>
  	 </select>
  	 
  	 <select id="allPrint" resultType="Department">

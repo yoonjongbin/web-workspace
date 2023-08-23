@@ -1,11 +1,16 @@
 package controller.component;
 
+import java.io.PrintWriter;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import org.json.JSONObject;
+
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 import controller.Controller;
 import controller.ModelAndView;
@@ -25,11 +30,18 @@ public class FindController implements Controller {
 		
 		//list.get(1).getStudentName();
 		
-		request.setAttribute("list", list);
+		JSONObject json = new JSONObject();
+		ObjectMapper mapper = new ObjectMapper();
+		String result = mapper.writeValueAsString(list);
 		
+		json.put("result", result);
+		//request.setAttribute("list", list);
 		
+		PrintWriter out =  response.getWriter();
+		out.print(json);
 		
-		return new ModelAndView(path);
+		return null;
+		//return new ModelAndView(path);
 	}
 
 }
